@@ -24,7 +24,7 @@ const Statistics = (props) => {
   if (total === 0) {
     return(
       <h3>
-        no feedback given >:(
+        no feedback given :(
       </h3>
     )
   }
