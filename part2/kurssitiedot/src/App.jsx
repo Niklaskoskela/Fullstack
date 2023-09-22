@@ -1,69 +1,60 @@
+import Course from './Course'
+
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-
-  const Part = (props) => {
-    return(
-      <p>
-        {props.title} {props.exercises}
-      </p>
-    )
-  }
-
-  const Content = (props) => {
-    return(
-      <div>
-        {props.course.parts.map( part =>
-            <Part key= {part.name} title = {part.name} exercises = {part.exercises} />
-        )}
-      </div>
-    )
-  }
-
-  const Header = (props) => {
-    return(<h1>{props.course.name}</h1>)
-  }
-  
-  const Total = (props) => {
-    return(
-      <p>
-        Number of exercises {
-         props.course.parts.map(
-          part => part.exercises
-         ).reduce((a, b) => a + b, 0)
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
         }
-      </p>
-    )
-  }
-
-  const Course = (props) => {
-    return(
-      <div>
-        <Header course={props.course}/>
-        <Content course={props.course} />
-        <Total course={props.course}/>
-      </div>
-    )
-  }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
   return (
     <div>
-      <Course course={course}/>
+      {
+        courses.map( course =>
+          <Course course={course} key={course.id} />
+        )
+      }
+      
+
     </div>
   )
 }
