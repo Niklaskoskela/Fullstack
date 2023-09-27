@@ -1,9 +1,12 @@
+import "./index.css"
+
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import FilterForm from './components/FilterForm.jsx'
 import PersonForm from './components/PersonForm.jsx'
 import Person from './components/Person.jsx'
 import personService from './service.js'
+import StatusMessage from './components/StatusMessage.jsx'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -20,14 +23,15 @@ const App = () => {
   console.log('render', persons.length, 'persons')
 
   const [filterWord, setFilterWord] = useState('')
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [statusMessage, setStatusMessage] = useState(null)
+  const [statusStyle, setStatusStyle] = useState('success')
+
+
   const handleFilterChange = (event) => {
     setFilterWord(event.target.value)
   } 
-
-  
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   } 
@@ -57,13 +61,21 @@ const App = () => {
           setPersons(persons.map(person =>
             person.id !== id ? person : changedPerson))
         }).catch(error => {
-        alert(
-          `the person '${p}' was already deleted from server`
-        )
+          setStatusMessage(`${changedPerson} was already deleted`)
+          setStatusStyle("error")
+          setTimeout(() => {
+            setStatusMessage(null)
+          }, 5000)
       })
       setPersons(persons.filter(n => n.id !== id))
+      setStatusMessage(`Added person ${newName}`)
+      setStatusStyle("success")
+      setTimeout(() => {
+        setStatusMessage(null)
+      }, 5000)
       setNewName("")
       setNewNumber("")
+  
     }
     else {
       personService.create(newPerson)
@@ -72,20 +84,36 @@ const App = () => {
           setPersons(persons.concat(response.data))
           setNewName("")
           setNewNumber("")
+          setStatusMessage(`Changed person ${p.name}`)
+          setStatusStyle("success")
+          setTimeout(() => {
+            setStatusMessage(null)
+          }, 5000)
       })
+      
     } 
   }
 
   const deleteNumber = (id) => {
-    if (window.confirm("Do you really want to remove this nmuber?")) {
+    if (window.confirm("Do you really want to remove this number?")) {
       personService.remove(id).then(
         setPersons(
           persons.filter(person => id != person.id)
         )
-        
-      
-      )
+      ).catch(error => {
+        setStatusMessage(`${id} was already deleted`)
+        setStatusStyle("error")
+        setTimeout(() => {
+          setStatusMessage(null)
+        }, 5000)
+    })
+      setStatusMessage(`Deleted person ${persons.find(p => p.id === id).name}`)
+      setStatusStyle("success")
+      setTimeout(() => {
+        setStatusMessage(null)
+      }, 5000)
     }
+
  
   }
 
@@ -94,6 +122,7 @@ const App = () => {
 
   return (
     <div>
+      <StatusMessage message={statusMessage} className={statusStyle} />
       <h2>Phonebook</h2>
       <FilterForm filterWord={filterWord} handleFilterChange={handleFilterChange}/>
       <h2>Add New</h2>
