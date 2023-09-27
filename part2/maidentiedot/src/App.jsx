@@ -14,7 +14,6 @@ const App = () => {
     console.log('effect')
     axios.get("https://studies.cs.helsinki.fi/restcountries/api/all").then(
       response => {
-        console.log(response)
         setCountries(response.data)
       }
     ).catch(
@@ -44,9 +43,10 @@ const App = () => {
       <FilterForm filterWord={filterWord} handleFilterChange={handleFilterChange}/>
     
       <p>–––</p>
-      <Countries countries={
-        countries.filter(country => country.name.common.includes(filterWord))
-        }/>
+      <Countries 
+      countries={  countries.filter(country => country.name.common.includes(filterWord))}
+      setFilterWord={(filterWord) => setFilterWord(filterWord)}
+        />
       
 
 
