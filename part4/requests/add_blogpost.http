@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs/
 Content-Type: application/json
 
 { 
-  "title": "Today's news",
-  "author": "me",
-  "url": "google.com",
-  "likes": "1"
+  "title": "Yesterday's day was cool",
+  "author": "you",
+  "url": "google.fi",
+  "likes": "5"
 }

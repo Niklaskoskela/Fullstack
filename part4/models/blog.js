@@ -15,6 +15,7 @@ const blogSchema = mongoose.Schema({
 
 
 const mongoUrl = config.MONGODB_URI
+
 mongoose.connect(mongoUrl).then( () =>
     logger.info("connected to MONGODB")
 )
