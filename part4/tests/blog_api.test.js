@@ -51,6 +51,16 @@ test('The blogs contain a specific blog', async () => {
   )
 })
 
+test('Blog post id is defined with name: id', async () => {
+  const response = await api.get('/api/blogs')
+  
+  const contents = response.body.map(r => r.id)
+  expect(contents[0]).toBeDefined()
+
+  
+})
+
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
