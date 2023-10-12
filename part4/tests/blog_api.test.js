@@ -80,6 +80,23 @@ test('Blog post is added', async () => {
 })
 
 
+
+test('If likes are undefined, default them to 0', async () => {
+  const newBlog = { 
+    "title": "Blog #3",
+    "author": "me",
+    "url": "google.com",
+  }
+
+  blogObject = new Blog(newBlog)
+  await blogObject.save()
+  
+  const response = await api.get('/api/blogs')
+  
+  expect(response.body[initialBlogs.length].likes).toBe(0)
+  
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
