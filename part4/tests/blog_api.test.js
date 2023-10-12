@@ -143,8 +143,8 @@ test('Blog updates likes', async () => {
 
   blogUpdated.likes += 1
   
-  await apis
-  .put('/api/blogs/'+blogID)
+  await api
+  .put('/api/blogs/'+blogUpdated.id)
   .send(blogUpdated)
 
   const response = await api.get('/api/blogs')
