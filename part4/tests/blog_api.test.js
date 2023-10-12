@@ -4,6 +4,8 @@ const app = require('../app')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
+const { describe } = require('node:test')
 
 const initialBlogs = [
   { 
@@ -154,7 +156,60 @@ describe("blog api tests",  () => {
   })
 })
 
+describe("adding users", () =>{
+  
+  beforeEach(async () => {
+    await User.deleteMany({})
+  })
 
+  test("able to add users", async () =>{
+    
+    const newUser = { 
+      "username": "rauha",
+      "name": "rauha räppääjä",
+      "password": "risto",
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(201)
+  })
+
+  test("does not accept users with bad passwords", async () =>{
+    const newUser = { 
+      "username": "rauha",
+      "name": "rauha räppääjä",
+      "password": "ri",
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+  })
+
+  test("does not accept users with non unique usernames ", async () =>{
+    const newUser = { 
+      "username": "risto",
+      "name": "risto räppääjä",
+      "password": "rauha",
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(201)
+
+    //add him again
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+  })
+
+})
 
 afterAll(async () => {
   await mongoose.connection.close()
