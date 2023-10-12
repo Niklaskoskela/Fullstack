@@ -139,8 +139,9 @@ test('Deleting a blog removes a blog', async () => {
 
 test('Blog updates likes', async () => {
   const idresponse = await api.get('/api/blogs')
-  const blogUpdated = idresponse.body[0]
+  expect(idresponse.body[0].likes).toBe(1)
 
+  const blogUpdated = idresponse.body[0]
   blogUpdated.likes += 1
   
   await api
@@ -148,7 +149,7 @@ test('Blog updates likes', async () => {
   .send(blogUpdated)
 
   const response = await api.get('/api/blogs')
-
+  //initial likes = 2
   expect(response.body[0].likes).toBe(2)
 })
 
