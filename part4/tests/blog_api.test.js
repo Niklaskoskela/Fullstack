@@ -125,7 +125,7 @@ test('Blog without url responds with 400', async () => {
 
 test('Deleting a blog removes a blog', async () => {
   const response = await api.get('/api/blogs')
-  blogID = response.body[0].id
+  const blogID = response.body[0].id
   console.log("blogid", blogID)
   
   await api
@@ -135,7 +135,21 @@ test('Deleting a blog removes a blog', async () => {
   const responseLess = await api.get('/api/blogs')
 
   expect(responseLess.body.length).toBe(initialBlogs.length-1)
+})
+
+test('Blog updates likes', async () => {
+  const idresponse = await api.get('/api/blogs')
+  const blogUpdated = idresponse.body[0]
+
+  blogUpdated.likes += 1
   
+  await apis
+  .put('/api/blogs/'+blogID)
+  .send(blogUpdated)
+
+  const response = await api.get('/api/blogs')
+
+  expect(response.body[0].likes).toBe(2)
 })
 
 afterAll(async () => {
