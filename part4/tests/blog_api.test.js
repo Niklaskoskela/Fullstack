@@ -97,6 +97,47 @@ test('If likes are undefined, default them to 0', async () => {
   
 })
 
+test('Blog without title responds with 400', async () => {
+  const newBlog = { 
+    "author": "me",
+    "url": "google.com",
+  }
+  
+  await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(400)
+  
+})
+
+test('Blog without url responds with 400', async () => {
+  const newBlog = { 
+    "author": "me",
+    "title": "google.com",
+  }
+  
+  await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(400)
+  
+})
+
+test('Deleting a blog removes a blog', async () => {
+  const response = await api.get('/api/blogs')
+  blogID = response.body[0].id
+  console.log("blogid", blogID)
+  
+  await api
+  .delete('/api/blogs/'+blogID)
+  .expect(204)
+
+  const responseLess = await api.get('/api/blogs')
+
+  expect(responseLess.body.length).toBe(initialBlogs.length-1)
+  
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
