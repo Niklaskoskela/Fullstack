@@ -5,15 +5,18 @@ const User = require('./../models/user.js')
 
 
 blogsRouter.get('/', async (request, response) => {
-    const blogs = await Blog.find({})
-
+    const blogs = await Blog.find({}).populate('user')
+  
     response.json(blogs)
   })
   
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
-   
-  
+    //choose first user
+    const users = await User.find({})
+    console.log("user",users[0])
+    
+    body.user = users[0]._id
     const blog = new Blog(body)
 
     if (!blog.title | !blog.url){
@@ -21,6 +24,10 @@ blogsRouter.post('/', async (request, response) => {
     }
     else{
     const savedBlog = await blog.save()
+    
+    users[0].blogs = users[0].blogs.concat(savedBlog._id)
+    await users[0].save()
+
 
     response.status(201).json(savedBlog)
     }
