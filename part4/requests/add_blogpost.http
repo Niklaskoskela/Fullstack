@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBlbGxlMSIsImlkIjoiNjUyN2M0Y2RhYjA2MGRiNzUxNjczZDlhIiwiaWF0IjoxNjk3MTkwNjc5fQ.oe33cijuQdiyuPrAkd_SkM5aWHwuywRo5MQDYU5D-h0
 
 { 
-  "title": "Life was cool",
-  "author": "you",
-  "url": "google.fi",
+  "title": "Life is still cool",
+  "author": "lol",
+  "url": "GG.com",
   "likes": "5"
 }
