@@ -3,8 +3,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBlbGxlMSIsImlkIjoiNjUyN2M0Y2RhYjA2MGRiNzUxNjczZDlhIiwiaWF0IjoxNjk3MTkwNjc5fQ.oe33cijuQdiyuPrAkd_SkM5aWHwuywRo5MQDYU5D-h0
 
 { 
-  "title": "Life is still cool",
+  "title": "Life could not be a dream",
   "author": "lol",
-  "url": "GG.com",
+  "url": "GG.fi",
   "likes": "5"
 }
